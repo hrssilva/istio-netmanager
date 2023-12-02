@@ -1,6 +1,6 @@
 #!/bin/bash
-kubectl aplly -f services/
-kubectl aplly -f monitors/
+kubectl apply -f services/
+kubectl apply -f monitors/
 
 INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
