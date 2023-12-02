@@ -1,2 +1,4 @@
 #!/bin/bash
-kubectl label namespace default istio-injection=enabled
+kubectl create namespace bookinfo
+kubectl create namespace monitoring
+kubectl label namespace bookinfo istio-injection=enabled
