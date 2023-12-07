@@ -34,7 +34,7 @@ spec:
     route:
     - destination:
         host: reviews
-        subset: v3
+        subset: v1
   - route:
     - destination:
         host: reviews

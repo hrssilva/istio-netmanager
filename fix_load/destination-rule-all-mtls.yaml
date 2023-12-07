@@ -7,18 +7,43 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-    outlierDetection:
-      consecutiveErrors: 2
-      interval: 1s
-      baseEjectionTime: 1m
-      maxEjectionPercent: 100
   subsets:
   - name: v1
     labels:
       version: v1
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+      outlierDetection: 
+        consecutive5xxErrors: 3
+        interval: 1s
+        baseEjectionTime: 1m
+        maxEjectionPercent: 100
   - name: v2
     labels:
       version: v2
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+      outlierDetection: 
+        consecutive5xxErrors: 3
+        interval: 1s
+        baseEjectionTime: 1m
+        maxEjectionPercent: 100
   - name: v3
     labels:
       version: v3
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+      outlierDetection: 
+        consecutive5xxErrors: 3
+        interval: 1s
+        baseEjectionTime: 1m
+        maxEjectionPercent: 100
