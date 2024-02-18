@@ -1,5 +1,4 @@
 import requests
-import prometheus-client
 import pandas as pd
 
 def outgoing_latency_avg(response_3):
@@ -12,6 +11,6 @@ def get_prometheus_data(prometheus_addr):
     response_2 = requests.get("http://" + prometheus_addr + ":3000/api/v1/query?query=istio_response_bytes_sum")  # istio_response_bytes_sum
     response_3 = requests.get("http://" + prometheus_addr + ":3000/api/v1/query?query=istio_agent_outgoing_latency")  # istio_agent_outgoing_latency
     
-    response = (outgoing_latency_avg(response_3), response_1 +response_2)
+    response = (outgoing_latency_avg(response_3), response_1.data.result.value + response_2.data.result.value)
 
     return response
