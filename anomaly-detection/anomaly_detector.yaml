@@ -29,9 +29,13 @@ spec:
           value: prometheus
         - name: PROMETHEUS_PORT
           value: '9090'
+        - name: KNN_NEIGHBORS
+          value: '5'
+        - name: WAIT_SEC
+          value: '1'
         ports:
         - name: exporter
-          containerPort: 8080
+          containerPort: 9090
           protocol: TCP
         - name: tcp
           containerPort: 80
