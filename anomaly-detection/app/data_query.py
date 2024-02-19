@@ -9,12 +9,19 @@ def outgoingLatencyAvg(response_3):
     ret = sum(values)/len(values)
     return ret
 
+def totalBytesExchanged(response_1, response_2):
+    df1 = pd.DataFrame.from_dict(response_1.json())
+    df2 = pd.DataFrame.from_dict(response_2.json())
+    values1 = [int(a['value'][1]) for a in df1['data']['result']]
+    values2 = [int(a['value'][1]) for a in df2['data']['result']]
+    return 0 if (not values1) and (not values2) else (sum(values1) + sum(values2))
+
 def getPrometheusData(prometheus_addr):
     response_1 = requests.get("http://" + prometheus_addr + "/api/v1/query?query=istio_request_bytes_sum")  # istio_request_bytes_sum
     response_2 = requests.get("http://" + prometheus_addr + "/api/v1/query?query=istio_response_bytes_sum")  # istio_response_bytes_sum
     response_3 = requests.get("http://" + prometheus_addr + "/api/v1/query?query=istio_agent_outgoing_latency")  # istio_agent_outgoing_latency
     #print(response_3.json(), file=sys.stderr)
 
-    response = (outgoingLatencyAvg(response_3))
+    response = (outgoingLatencyAvg(response_3), totalBytesExchanged(response_1, response_2))
 
-    return response
+    return response 
