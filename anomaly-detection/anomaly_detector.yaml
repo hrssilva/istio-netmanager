@@ -19,7 +19,6 @@ spec:
         app: anomaly-detector
         version: v2
     spec:
-      #serviceAccountName: bookinfo-reviews
       containers:
       - name: anomaly-detector
         image: rafatrevisan/anomaly_detector:latest
