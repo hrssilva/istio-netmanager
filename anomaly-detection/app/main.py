@@ -9,12 +9,14 @@ if __name__ == "__main__":
     try:
         prometheus = environ['PROMETHEUS_ADDRESS'].strip("'") + ':' + environ['PROMETHEUS_PORT'].strip("'")
         prev_outliers = set()
+        data = [[]]
         while(True):
             start_http_server(8080)
             g = Gauge('Current_Anomalies','Current anomalies on network')
             n = Gauge('New_Anomalies', 'New detected anomalies on network')
             c = Counter('Detected_Anomalies','Anomalies detected since program started')  
-            data = dq.getPrometheusData(prometheus)
+            x, y = dq.getPrometheusData(prometheus)
+            data.append([x, y])
             outliers = ad.getOutliers(data) # Index of outliers in 'data'
             new_outliers = outliers - prev_outliers
             if len(outliers) > 0:
