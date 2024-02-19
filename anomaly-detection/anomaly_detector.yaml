@@ -37,3 +37,27 @@ spec:
           containerPort: 80
           protocol: TCP
 ---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: anomaly-detector
+  namespace: istio-system
+  labels:
+    app: anomaly-detector
+    version: v1
+spec:
+  endpoints:
+      interval: 1s
+      params:
+        type:
+          - prometheus
+      path: /
+      port: exporter
+      scheme: http
+  jobLabel: anomaly-scraping
+  namespaceSelector:
+    matchNames:
+    {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {}
