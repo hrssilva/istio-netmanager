@@ -1,5 +1,5 @@
-import sklearn as sk
+from sklearn.neighbors import LocalOutlierFactor
 
 def getOutliers(data):
-    lof = sk.neighbor.LocalOutlierFactor()
+    lof = LocalOutlierFactor()
     return set([idx for idx, e in enumerate(lof.fit_predict(data)) if e < 0])
