@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-detector
+  namespace: istio-system
+  labels:
+    app: anomaly-detector
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-detector
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: anomaly-detector
+        version: v2
+    spec:
+      #serviceAccountName: bookinfo-reviews
+      containers:
+      - name: anomaly-detector
+        image: rafatrevisan/anomaly_detector:latest
+        imagePullPolicy: Always
+        env:
+        - name: PROMETHEUS_ADDRESS
+          value: prometheus
+        - name: PROMETHEUS_PORT
+          value: '9090'
+        ports:
+        - name: exporter
+          containerPort: 8080
+          protocol: TCP
+        - name: tcp
+          containerPort: 80
+          protocol: TCP
+---

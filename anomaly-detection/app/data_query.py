@@ -12,6 +12,6 @@ def getPrometheusData(prometheus_addr):
     response_2 = requests.get("http://" + prometheus_addr + "/api/v1/query?query=istio_response_bytes_sum")  # istio_response_bytes_sum
     response_3 = requests.get("http://" + prometheus_addr + "/api/v1/query?query=istio_agent_outgoing_latency")  # istio_agent_outgoing_latency
     
-    response = (outgoingLatencyAvg(response_3), response_1.data.result.value + response_2.data.result.value)
+    response = (outgoingLatencyAvg(response_3).data)
 
     return response
