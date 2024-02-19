@@ -61,7 +61,4 @@ spec:
   jobLabel: anomaly-scraping
   namespaceSelector:
     matchNames:
-    {}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {}
+    - {}
