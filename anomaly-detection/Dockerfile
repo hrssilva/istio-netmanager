@@ -1,12 +1,12 @@
 FROM python:latest
 
-WORKDIR /code
-
 RUN pip install requests
 RUN pip install kubernetes
-RUN pip install sklearn
-RUN pip install prometheus_client
+RUN pip install scikit-learn
+RUN pip install prometheus-client
+RUN pip install pandas
 
-COPY ./src/ ./
+COPY ./app /app
+WORKDIR /app
 
-CMD python -u main.py
+CMD [ "python main.py" ]

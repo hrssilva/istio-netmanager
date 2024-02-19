@@ -3,6 +3,6 @@ services:
   manager:
     image: anomaly_detector
     environment:
-      - PROMETHEUS_ADDRESS='6443'
-      - PROMETHEUS_PORT='10'
+      - PROMETHEUS_ADDRESS='localhost'
+      - PROMETHEUS_PORT='9090'
     restart: always
