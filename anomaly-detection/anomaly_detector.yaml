@@ -41,24 +41,17 @@ spec:
           protocol: TCP
 
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: v1
+kind: Service
 metadata:
   name: anomaly-detector
   namespace: istio-system
   labels:
     app: anomaly-detector
-    version: v1
+    service: anomaly-detector
 spec:
-  endpoints:
-      interval: 1s
-      params:
-        type:
-          - prometheus
-      path: /
-      port: exporter
-      scheme: http
-  jobLabel: anomaly-scraping
-  namespaceSelector:
-    matchNames:
-    - {}
+  ports:
+  - port: 9090
+    name: http
+  selector:
+    app: anomaly-detector
