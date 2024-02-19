@@ -5,15 +5,14 @@ import sys
 def outgoingLatencyAvg(response_3):
     df = pd.DataFrame.from_dict(response_3.json())
     values = [float(a['value'][1]) for a in df['data']['result']]
-    print(values,file=sys.stderr)
     ret = sum(values)/len(values)
     return ret
 
 def totalBytesExchanged(response_1, response_2):
     df1 = pd.DataFrame.from_dict(response_1.json())
     df2 = pd.DataFrame.from_dict(response_2.json())
-    values1 = [int(a['value'][1]) for a in df1['data']['result']]
-    values2 = [int(a['value'][1]) for a in df2['data']['result']]
+    values1 = [int(round(float(a['value'][1]))) for a in df1['data']['result']]
+    values2 = [int(round(float(a['value'][1]))) for a in df2['data']['result']]
     return 0 if (not values1) and (not values2) else (sum(values1) + sum(values2))
 
 def getPrometheusData(prometheus_addr):
