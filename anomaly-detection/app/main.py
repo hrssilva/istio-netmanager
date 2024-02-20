@@ -16,9 +16,9 @@ if __name__ == "__main__":
             prev_outliers = set()
             data = []
             start_http_server(9090)
-            g = Gauge('Current_Anomalies','Current anomalies on network')
-            n = Gauge('New_Anomalies', 'New detected anomalies on network')
-            c = Counter('Detected_Anomalies','Anomalies detected since program started')
+            g = Gauge('current_anomalies','Current anomalies on network')
+            n = Gauge('new_anomalies', 'New detected anomalies on network')
+            c = Counter('detected_anomalies','Anomalies detected since program started')
             while(True):
                 x, y = dq.getPrometheusData(prometheus)
                 print("Data Queried " + str(x) + " " + str(y))
