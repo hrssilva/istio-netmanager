@@ -36,6 +36,8 @@ spec:
           value: '5'
         - name: WAIT_SEC
           value: '1'
+        - name: MAX_ELEMENTS_COUNT
+          value: '256'
         ports:
         - name: exporter
           containerPort: 9090

@@ -12,6 +12,7 @@ if __name__ == "__main__":
         prometheus = environ['PROMETHEUS_ADDRESS'].strip("'") + ':' + environ['PROMETHEUS_PORT'].strip("'")
         neighbors = int(environ['KNN_NEIGHBORS'])
         wait_time = int(environ['WAIT_SEC'])
+        max_count = int(environ['MAX_ELEMENTS_COUNT'])
         try:
             sleep(wait_time)
             prev_outliers = set()
@@ -35,6 +36,8 @@ if __name__ == "__main__":
                     c.inc()
                     g.set(len(outliers))
                     n.set(len(new_outliers))
+                if len(data) >= max_count:
+                    data.pop(0)
                 sleep(wait_time)
         except :
             print('Unknown Error')
