@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: anomaly-detector
-        image: rafatrevisan/anomaly_detector:latest
+        image: hrssilva/anomaly_detector:latest
         imagePullPolicy: Always
         env:
         - name: PROMETHEUS_ADDRESS
@@ -35,7 +35,7 @@ spec:
         - name: KNN_NEIGHBORS
           value: '5'
         - name: WAIT_SEC
-          value: '1'
+          value: '30'
         - name: MAX_ELEMENTS_COUNT
           value: '256'
         ports:

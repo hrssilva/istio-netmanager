@@ -5,7 +5,7 @@ import sys
 def requestLatencyAvg(response_3):
     df = pd.DataFrame.from_dict(response_3.json())
     values = [float(a['value'][1]) for a in df['data']['result']]
-    ret = sum(values)/len(values)
+    ret = 0 if len(values) == 0 else sum(values)/len(values)
     return ret
 
 def totalBytesExchanged(response_1, response_2):

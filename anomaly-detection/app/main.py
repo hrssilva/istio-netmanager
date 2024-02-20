@@ -20,6 +20,7 @@ if __name__ == "__main__":
             start_http_server(9090)
             g = Gauge('current_anomalies','Current anomalies on network')
             n = Gauge('new_anomalies', 'New detected anomalies on network')
+            a = Counter('anomaly_detector_samples_count', f'Current amount of samples composing the data for detection with upper bound of {max_count}')
             c = Counter('detected_anomalies','Anomalies detected since program started')
             _, prev_bytes = dq.getPrometheusData(prometheus)
             sleep(wait_time)
@@ -38,6 +39,8 @@ if __name__ == "__main__":
                     n.set(len(new_outliers))
                 if len(data) >= max_count:
                     data.pop(0)
+                else:
+                    a.inc()
                 sleep(wait_time)
         except :
             print('Unknown Error')
