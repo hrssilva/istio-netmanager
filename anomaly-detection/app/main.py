@@ -13,25 +13,28 @@ if __name__ == "__main__":
         neighbors = int(environ['KNN_NEIGHBORS'])
         wait_time = int(environ['WAIT_SEC'])
         try:
+            sleep(wait_time)
             prev_outliers = set()
             data = []
             start_http_server(9090)
             g = Gauge('current_anomalies','Current anomalies on network')
             n = Gauge('new_anomalies', 'New detected anomalies on network')
             c = Counter('detected_anomalies','Anomalies detected since program started')
+            _, prev_bytes = dq.getPrometheusData(prometheus)
+            sleep(wait_time)
             while(True):
-                x, y = dq.getPrometheusData(prometheus)
+                x, total_bytes = dq.getPrometheusData(prometheus)
+                y = (total_bytes - prev_bytes) / wait_time
                 print("Data Queried " + str(x) + " " + str(y))
                 data.append([x, y])
                 outliers = ad.getOutliers(data, neighbors) # Index of outliers in 'data'
-                print("Data Queried " + str(x) + " " + str(y))
                 new_outliers = outliers - prev_outliers
+                prev_outliers = outliers
                 if len(outliers) > 0:
                     print("Anomaly Ocurred ",[data[o] for o in outliers])
                     c.inc()
                     g.set(len(outliers))
-                    n.set(new_outliers)
-
+                    n.set(len(new_outliers))
                 sleep(wait_time)
         except :
             print('Unknown Error')

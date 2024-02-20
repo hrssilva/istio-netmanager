@@ -47,9 +47,6 @@ data:
     - /etc/config/rules
     - /etc/config/alerts
     scrape_configs:
-    - job_name: anomaly_detector
-      static_configs:
-      - targets: anomaly-detector:9090
     - job_name: prometheus
       static_configs:
       - targets:

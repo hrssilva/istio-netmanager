@@ -12,12 +12,16 @@ spec:
   selector:
     matchLabels:
       app: anomaly-detector
-      version: v2
+      version: v1
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
       labels:
         app: anomaly-detector
-        version: v2
+        version: v1
     spec:
       containers:
       - name: anomaly-detector
@@ -55,3 +59,11 @@ spec:
     name: http
   selector:
     app: anomaly-detector
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: anomaly-detector
+  labels:
+    account: anomaly-detector
+
